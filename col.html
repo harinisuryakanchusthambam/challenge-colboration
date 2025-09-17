@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Typing Speed Test</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin: 40px; }
+    #text { border: 1px solid #ccc; padding: 10px; width: 60%; margin: 20px auto; }
+    textarea { width: 60%; height: 100px; }
+    h2 { color: darkblue; }
+  </style>
+</head>
+<body>
+  <h2>Typing Speed Test</h2>
+  <p id="text">Practice makes perfect. Keep typing to improve speed!</p>
+  <textarea id="input" placeholder="Start typing here..."></textarea>
+  <p>Time: <span id="time">0</span>s | Speed: <span id="speed">0</span> WPM</p>
+
+  <script>
+    const input = document.getElementById("input");
+    const text = document.getElementById("text").innerText;
+    const timeEl = document.getElementById("time");
+    const speedEl = document.getElementById("speed");
+    let start = null, timer;
+
+    input.addEventListener("input", () => {
+      if (!start) {
+        start = Date.now();
+        timer = setInterval(updateTime, 1000);
+      }
+      const words = input.value.trim().split(/\s+/).filter(w => w).length;
+      const seconds = (Date.now() - start) / 1000;
+      speedEl.textContent = Math.round((words / seconds) * 60);
+    });
+
+    function updateTime() {
+      const seconds = Math.floor((Date.now() - start) / 1000);
+      timeEl.textContent = seconds;
+    }
+  </script>
+</body>
+</html>
